@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0"
+    />
+
+    <meta
+      name="description"
+      content="Neural Stress Core — an interactive high-tech digital stress ball."
+    />
+
+    <meta name="theme-color" content="#02050b" />
+
+    <title>Neural Stress Core</title>
+
+    <link rel="stylesheet" href="./src/style.css" />
+  </head>
+
+  <body>
+    <canvas
+      id="scene"
+      aria-label="Interactive high-tech digital stress ball"
+    ></canvas>
+
+    <main class="interface">
+      <header class="top-bar">
+        <div class="brand">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>NEURAL CORE</span>
+        </div>
+
+        <button
+          id="soundToggle"
+          class="icon-button"
+          type="button"
+          aria-label="Toggle sound"
+          aria-pressed="true"
+        >
+          SOUND ON
+        </button>
+      </header>
+
+      <section class="hero-copy" aria-labelledby="page-title">
+        <p class="eyebrow">TACTILE CALMING SYSTEM / 01</p>
+
+        <h1 id="page-title">
+          COMPRESS
+          <br />
+          <span>THE NOISE.</span>
+        </h1>
+
+        <p class="instruction">
+          Press, hold, and drag the energy core.
+        </p>
+      </section>
+
+      <aside class="telemetry" aria-label="Core telemetry">
+        <div class="telemetry-heading">
+          <span>CORE TELEMETRY</span>
+
+          <span class="live">
+            LIVE
+          </span>
+        </div>
+
+        <div class="metric">
+          <div class="metric-row">
+            <span>PRESSURE</span>
+
+            <strong id="pressureValue">
+              00%
+            </strong>
+          </div>
+
+          <div
+            class="bar"
+            role="progressbar"
+            aria-label="Core pressure"
+            aria-valuemin="0"
+            aria-valuemax="100"
+            aria-valuenow="0"
+          >
+            <i id="pressureBar"></i>
+          </div>
+        </div>
+
+        <div class="metric compact">
+          <span>STATE</span>
+
+          <strong id="stateValue">
+            STABLE
+          </strong>
+        </div>
+
+        <div class="metric compact">
+          <span>RELEASES</span>
+
+          <strong id="releaseValue">
+            000
+          </strong>
+        </div>
+      </aside>
+
+      <nav class="mode-panel" aria-label="Core color mode">
+        <button
+          class="mode active"
+          type="button"
+          data-theme="cyan"
+          aria-pressed="true"
+        >
+          ION
+        </button>
+
+        <button
+          class="mode"
+          type="button"
+          data-theme="violet"
+          aria-pressed="false"
+        >
+          VOID
+        </button>
+
+        <button
+          class="mode"
+          type="button"
+          data-theme="amber"
+          aria-pressed="false"
+        >
+          SOLAR
+        </button>
+      </nav>
+
+      <footer class="system-footer">
+        <span>
+          WEBGL // SOFT-BODY SIMULATION
+        </span>
+
+        <span id="fps">
+          60 FPS
+        </span>
+      </footer>
+    </main>
+
+    <div
+      id="flash"
+      class="flash"
+      aria-hidden="true"
+    ></div>
+
+    <noscript>
+      This experience requires JavaScript to run.
+    </noscript>
+
+    <script type="module" src="./src/main.js"></script>
+  </body>
+</html>
