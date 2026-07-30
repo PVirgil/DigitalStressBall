@@ -1,0 +1,710 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+:root {
+    --bg: #02050b;
+    --panel: rgba(10, 18, 34, 0.55);
+    --panel-border: rgba(255, 255, 255, 0.08);
+
+    --text: #eefcff;
+    --text-muted: rgba(225, 240, 255, 0.55);
+
+    --accent: #62e9ff;
+    --accent-rgb: 98, 233, 255;
+
+    --radius: 18px;
+    --transition: 0.25s ease;
+
+    font-family: "Inter", sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--bg);
+    color: var(--text);
+}
+
+body {
+    position: relative;
+    user-select: none;
+    -webkit-user-select: none;
+    font-family: "Inter", sans-serif;
+}
+
+/* ==========================
+   WebGL Canvas
+========================== */
+
+#scene {
+    position: fixed;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    display: block;
+    cursor: grab;
+    touch-action: none;
+}
+
+#scene:active {
+    cursor: grabbing;
+}
+
+/* ==========================
+   Main Layout
+========================== */
+
+.interface {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto 1fr auto;
+
+    padding: 28px 34px;
+}
+
+/* ==========================
+   Header
+========================== */
+
+.top-bar,
+header {
+    grid-column: 1 / -1;
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+
+    font-family: "Space Mono", monospace;
+    font-size: 11px;
+    letter-spacing: .18em;
+}
+
+.brand-mark {
+    width: 10px;
+    height: 10px;
+
+    border: 1px solid var(--accent);
+
+    transform: rotate(45deg);
+
+    box-shadow:
+        0 0 8px var(--accent),
+        0 0 20px rgba(var(--accent-rgb), .5);
+}
+
+/* ==========================
+   Buttons
+========================== */
+
+.icon-button,
+.mode {
+    pointer-events: auto;
+
+    background: rgba(10, 20, 35, .45);
+
+    backdrop-filter: blur(20px);
+
+    border: 1px solid rgba(255,255,255,.12);
+
+    color: rgba(255,255,255,.7);
+
+    font-family: "Space Mono", monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: .15em;
+
+    padding: 10px 14px;
+
+    cursor: pointer;
+
+    transition: var(--transition);
+}
+
+.icon-button:hover,
+.mode:hover,
+.mode.active {
+
+    border-color: rgba(var(--accent-rgb), .6);
+
+    color: white;
+
+    box-shadow:
+        0 0 20px rgba(var(--accent-rgb), .2),
+        inset 0 0 16px rgba(var(--accent-rgb), .08);
+}
+
+/* ==========================
+   Hero Text
+========================== */
+
+.hero-copy {
+
+    align-self: center;
+
+    max-width: 430px;
+
+    transform: translateY(-4vh);
+}
+
+.eyebrow {
+
+    font-family: "Space Mono", monospace;
+    font-size: 10px;
+
+    color: var(--text-muted);
+
+    letter-spacing: .22em;
+}
+
+.hero-copy h1 {
+
+    margin: 18px 0;
+
+    font-size: clamp(48px, 7vw, 96px);
+
+    line-height: .88;
+
+    letter-spacing: -.07em;
+
+    font-weight: 600;
+}
+
+.hero-copy h1 span {
+
+    color: transparent;
+
+    -webkit-text-stroke: 1px rgba(var(--accent-rgb), .85);
+
+    text-shadow:
+        0 0 22px rgba(var(--accent-rgb), .12);
+}
+
+.instruction {
+
+    font-family: "Space Mono", monospace;
+
+    font-size: 10px;
+
+    color: rgba(255,255,255,.55);
+
+    letter-spacing: .08em;
+
+    margin-top: 18px;
+}
+
+/* ==========================
+   Telemetry Card
+========================== */
+
+.telemetry {
+
+    align-self: center;
+
+    width: 240px;
+
+    padding: 18px;
+
+    border-radius: var(--radius);
+
+    border: 1px solid var(--panel-border);
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(15,25,45,.62),
+            rgba(5,10,20,.3)
+        );
+
+    backdrop-filter: blur(20px);
+
+    box-shadow:
+        0 18px 60px rgba(0,0,0,.35);
+}
+
+.telemetry-heading {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    font-family: "Space Mono", monospace;
+
+    font-size: 10px;
+
+    letter-spacing: .14em;
+
+    color: rgba(255,255,255,.75);
+
+    padding-bottom: 14px;
+
+    border-bottom: 1px solid rgba(255,255,255,.08);
+}
+
+.live {
+
+    color: var(--accent);
+
+    display: flex;
+
+    align-items: center;
+}
+
+.live::before {
+
+    content: "";
+
+    width: 6px;
+    height: 6px;
+
+    border-radius: 50%;
+
+    margin-right: 7px;
+
+    background: var(--accent);
+
+    box-shadow: 0 0 10px var(--accent);
+
+    animation: pulseDot 1.5s infinite;
+}
+
+.metric {
+
+    margin-top: 18px;
+}
+
+.metric-row {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    font-family: "Space Mono", monospace;
+
+    font-size: 10px;
+
+    color: rgba(255,255,255,.55);
+}
+
+.metric strong {
+
+    color: white;
+
+    font-size: 12px;
+
+    letter-spacing: .08em;
+}
+
+.bar {
+
+    width: 100%;
+
+    height: 3px;
+
+    margin-top: 10px;
+
+    overflow: hidden;
+
+    background: rgba(255,255,255,.08);
+
+    border-radius: 10px;
+}
+
+.bar i {
+
+    display: block;
+
+    width: 0%;
+
+    height: 100%;
+
+    background: var(--accent);
+
+    box-shadow:
+        0 0 12px var(--accent);
+
+    transition: width .08s linear;
+}
+
+.metric.compact {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    margin-top: 14px;
+
+    font-family: "Space Mono", monospace;
+
+    font-size: 10px;
+
+    color: rgba(255,255,255,.55);
+}
+
+/* ==========================
+   Mode Selector
+========================== */
+
+.mode-panel {
+    position: fixed;
+    left: 50%;
+    bottom: 28px;
+
+    transform: translateX(-50%);
+
+    display: flex;
+
+    pointer-events: auto;
+
+    z-index: 20;
+}
+
+.mode {
+    min-width: 70px;
+    border-radius: 0;
+}
+
+.mode:first-child {
+    border-top-left-radius: 14px;
+    border-bottom-left-radius: 14px;
+}
+
+.mode:last-child {
+    border-top-right-radius: 14px;
+    border-bottom-right-radius: 14px;
+}
+
+.mode + .mode {
+    margin-left: -1px;
+}
+
+/* ==========================
+   Footer
+========================== */
+
+.system-footer,
+footer {
+
+    grid-column: 1 / -1;
+
+    display: flex;
+
+    justify-content: space-between;
+
+    align-items: center;
+
+    align-self: end;
+
+    margin-top: 30px;
+
+    font-family: "Space Mono", monospace;
+
+    font-size: 10px;
+
+    color: rgba(255,255,255,.45);
+
+    letter-spacing: .14em;
+}
+
+/* ==========================
+   Flash Overlay
+========================== */
+
+.flash {
+
+    position: fixed;
+
+    inset: 0;
+
+    pointer-events: none;
+
+    opacity: 0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(var(--accent-rgb), .35),
+            transparent 55%
+        );
+
+    mix-blend-mode: screen;
+}
+
+/* ==========================
+   Utility Effects
+========================== */
+
+.glass {
+
+    background: rgba(255,255,255,.05);
+
+    backdrop-filter: blur(18px);
+
+    border: 1px solid rgba(255,255,255,.08);
+
+    border-radius: var(--radius);
+}
+
+.glow {
+
+    box-shadow:
+        0 0 18px rgba(var(--accent-rgb), .25),
+        0 0 40px rgba(var(--accent-rgb), .12);
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* ==========================
+   Scrollbars
+========================== */
+
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+
+    background: rgba(var(--accent-rgb), .25);
+
+    border-radius: 999px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* ==========================
+   Selection
+========================== */
+
+::selection {
+    background: rgba(var(--accent-rgb), .35);
+    color: white;
+}
+
+/* ==========================
+   Animations
+========================== */
+
+@keyframes pulseDot {
+
+    0% {
+
+        opacity: 1;
+
+        transform: scale(1);
+    }
+
+    50% {
+
+        opacity: .3;
+
+        transform: scale(.65);
+    }
+
+    100% {
+
+        opacity: 1;
+
+        transform: scale(1);
+    }
+}
+
+@keyframes floatPanel {
+
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-4px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+@keyframes glowPulse {
+
+    0% {
+
+        box-shadow:
+            0 0 10px rgba(var(--accent-rgb), .15),
+            0 0 22px rgba(var(--accent-rgb), .08);
+    }
+
+    50% {
+
+        box-shadow:
+            0 0 20px rgba(var(--accent-rgb), .35),
+            0 0 50px rgba(var(--accent-rgb), .18);
+    }
+
+    100% {
+
+        box-shadow:
+            0 0 10px rgba(var(--accent-rgb), .15),
+            0 0 22px rgba(var(--accent-rgb), .08);
+    }
+}
+
+.telemetry {
+    animation: floatPanel 8s ease-in-out infinite;
+}
+
+.icon-button:hover,
+.mode:hover,
+.mode.active {
+    animation: glowPulse 2s ease-in-out infinite;
+}
+
+/* ==========================
+   Responsive Layout
+========================== */
+
+@media (max-width: 1024px) {
+
+    .interface {
+
+        padding: 24px;
+
+        grid-template-columns: 1fr;
+    }
+
+    .hero-copy {
+
+        transform: none;
+
+        margin-top: 10vh;
+    }
+
+    .telemetry {
+
+        position: fixed;
+
+        right: 24px;
+
+        bottom: 100px;
+    }
+}
+
+@media (max-width: 768px) {
+
+    .hero-copy {
+
+        margin-top: 12vh;
+
+        max-width: 300px;
+    }
+
+    .hero-copy h1 {
+
+        font-size: clamp(48px, 13vw, 72px);
+    }
+
+    .instruction {
+
+        max-width: 240px;
+
+        line-height: 1.8;
+    }
+
+    .telemetry {
+
+        width: 190px;
+    }
+
+    footer span:first-child {
+        display: none;
+    }
+
+    footer {
+        justify-content: flex-end;
+    }
+}
+
+@media (max-width: 560px) {
+
+    .interface {
+
+        padding: 18px;
+    }
+
+    .hero-copy {
+
+        margin-top: 14vh;
+    }
+
+    .telemetry {
+
+        position: fixed;
+
+        left: 18px;
+
+        right: 18px;
+
+        width: auto;
+
+        bottom: 90px;
+    }
+
+    .mode-panel {
+
+        bottom: 18px;
+
+        width: calc(100% - 36px);
+    }
+
+    .mode {
+
+        flex: 1;
+    }
+
+    footer {
+
+        display: none;
+    }
+}
+
+/* ==========================
+   Reduced Motion
+========================== */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+
+        animation: none !important;
+
+        transition: none !important;
+
+        scroll-behavior: auto !important;
+    }
+}
