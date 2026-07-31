@@ -165,16 +165,37 @@ let pointerWorld = new THREE.Vector3(0, 0, 1);
 let soundEnabled = true;
 let audioContext, oscillator, gain;
 
-function startSound() {
+async function startSound() {
   if (!soundEnabled) return;
-  audioContext ??= new AudioContext();
-  oscillator = audioContext.createOscillator();
-  gain = audioContext.createGain();
-  oscillator.type = 'sine';
-  oscillator.frequency.value = 70;
-  gain.gain.value = 0.0001;
-  oscillator.connect(gain).connect(audioContext.destination);
-  oscillator.start();
+
+  try {
+    // Support Safari/iOS
+    audioContext ??= new (window.AudioContext || window.webkitAudioContext)();
+
+    // Wake up suspended audio on mobile
+    if (audioContext.state === "suspended") {
+      await audioContext.resume();
+    }
+
+    // Prevent multiple oscillators
+    if (oscillator) return;
+
+    oscillator = audioContext.createOscillator();
+    gain = audioContext.createGain();
+
+    oscillator.type = "sine";
+    oscillator.frequency.value = 70;
+
+    gain.gain.value = 0.0001;
+
+    oscillator.connect(gain);
+    gain.connect(audioContext.destination);
+
+    oscillator.start();
+
+  } catch (err) {
+    console.warn("Audio unavailable:", err);
+  }
 }
 function updateSound(p) {
   if (!gain || !oscillator) return;
@@ -184,8 +205,12 @@ function updateSound(p) {
 function stopSound() {
   if (!gain || !oscillator) return;
   gain.gain.setTargetAtTime(.0001, audioContext.currentTime, .08);
-  oscillator.stop(audioContext.currentTime + .2);
-  oscillator = gain = null;
+  oscillator.stop(audioContext.currentTime + 0.2);
+
+oscillator.onended = () => {
+    oscillator = null;
+    gain = null;
+};
 }
 
 function updatePointer(event) {
