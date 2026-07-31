@@ -147,7 +147,11 @@ const ground = new THREE.Mesh(
   })
 );
 ground.rotation.x = -Math.PI / 2;
-ground.position.y = -2.05;
+ground.position.set(
+    root.position.x,
+    -2.05,
+    0
+);
 scene.add(ground);
 
 // Interaction
