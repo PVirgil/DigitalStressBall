@@ -263,6 +263,22 @@ footer {
     }
 }
 
+@media (max-width: 700px) and (orientation: portrait) {
+
+    .hero-copy{
+        margin-top: 6vh;
+    }
+
+    .telemetry{
+        bottom: 140px;
+    }
+
+    .mode-panel{
+        bottom: 30px;
+    }
+
+}
+
 @media (max-width:700px) and (max-height:500px){
 
     .hero-copy{
