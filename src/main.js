@@ -183,10 +183,12 @@ async function startSound() {
     oscillator = audioContext.createOscillator();
     gain = audioContext.createGain();
 
-    oscillator.type = "sine";
-    oscillator.frequency.value = 70;
+    oscillator.type = "triangle";
+    oscillator.frequency.setValueAtTime(120, audioContext.currentTime);
 
-    gain.gain.value = 0.0001;
+    gain.gain.value = 0;
+    gain.gain.setValueAtTime(0, audioContext.currentTime);
+    gain.gain.linearRampToValueAtTime(0.03, audioContext.currentTime + 0.05);
 
     oscillator.connect(gain);
     gain.connect(audioContext.destination);
