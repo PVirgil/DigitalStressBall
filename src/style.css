@@ -263,23 +263,6 @@ footer {
     }
 }
 
-@media (max-width:768px){
-
-.interface{
-    padding-bottom:220px;
-}
-
-.hero-copy{
-    transform:none;
-}
-
-.telemetry{
-    width:100%;
-    max-width:320px;
-}
-
-}
-
 @media (max-width:700px) and (max-height:500px){
 
     .hero-copy{
