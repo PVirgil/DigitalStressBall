@@ -199,7 +199,7 @@ function updatePointer(event) {
   }
   return false;
 }
-canvas.addEventListener('pointerdown', e => {
+canvas.addEventListener('pointerdown', async e => {
   if (!updatePointer(e)) return;
   isPressing = true;
   targetPressure = .42;
