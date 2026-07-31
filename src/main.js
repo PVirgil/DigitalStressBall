@@ -229,7 +229,7 @@ canvas.addEventListener('pointerdown', async e => {
   isPressing = true;
   targetPressure = .42;
   canvas.setPointerCapture(e.pointerId);
-  startSound();
+  await startSound();
 });
 canvas.addEventListener('pointermove', e => {
   updatePointer(e);
